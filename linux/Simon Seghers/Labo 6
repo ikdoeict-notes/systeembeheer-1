@@ -1,0 +1,237 @@
+Labo Linux Basis (2015 - 2016)
+Labo 6 - Gebruikeraccounts (Door Simon Seghers)
+
+
+Gebruikers
+----------
+
+1.	student@debian8Labo:~$ su -
+	Wachtwoord:    (<- hier dan Azerty123)
+	root@debian8Labo:~# cd /etc
+	root@debian8Labo:/etc# cp passwd /home/student/passwdCopy
+	root@debian8Labo:/etc# cp shadow /home/student/shadowCopy
+
+2.	root@debian8Labo:/etc# adduser gebruiker1
+	 Toevoegen van gebruiker `gebruiker1'...
+	 Toevoegen nieuwe groep `gebruiker1' (1002).
+	 Toevoegen nieuwe gebruiker `gebruiker1' (1002) met groep `gebruiker1'.
+	 Aanmaken gebruikersmap `/home/gebruiker1'...
+	 Kopiëren bestanden van `/etc/skel' ...
+	Nieuw UNIX-wachtwoord invoeren:    (<- wachtwoord naar keuze)
+	Nieuw UNIX-wachtwoord herhalen:    (<- herhaal wachtwoord)
+	 passwd: wachtwoord is met succes aangepast
+	 De gebruikersinformatie van gebruiker1 wordt veranderd
+	 Voer een nieuwe waarde in of druk op Enter voor de standaardwaarde
+		Volledige naam []: Test Gebruiker 1                   
+		Kamernummer []: 1
+		Telefoon werk []: 04123567 
+		Telefoon thuis []: 04987654
+		Varia []: verschillende hobby's
+	Is deze informatie correct? [Y/n] Y
+
+	(nakijken passwd en shadow)
+	root@debian8Labo:/etc# cat passwd
+	 root:x:0:0:root:/root:/bin/bash
+	 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+	 ...    (<- rest van het hele passwd bestand)
+	 student:x:1000:1000:student,,,:/home/student:/bin/bash
+	 sshd:x:116:65534::/var/run/sshd:/usr/sbin/nologin
+	 test:x:1001:1001:,,,:/home/test:/bin/bash
+	 gebruiker1:x:1002:1002:Test Gebruiker 1,1,04123567,04987654,verschillende hobby's:/home/gebruiker1:/bin/bash	(<- lijn dus toegevoegd!)
+	root@debian8Labo:/etc# cat shadow
+	 root:$6$x2sZZ8SN$pdQ9SOml6zDjn3U0ZuE8sDIx0MmvWdk2lQXPQ.h0RORKzC70E/fTT7vP4spt62og9PgH3OHdDo39gMXrpTjcK/:16686:0:99999:7:::
+	 daemon:*:16686:0:99999:7:::
+     	 bin:*:16686:0:99999:7:::
+	 ...    (<- rest van het hele shadow bestand)
+	 student:$6$XABuvEaC$ZxpUwtQZ4301paQPNs7FdQSs8VfOnnDuwMdiHzrhT2Al1kmJquqWIixHtKhqtz2f7brXsjDuguGBAjgCtOHLQ1:16686:0:99999:7:::
+	 sshd:*:16689:0:99999:7:::
+	 test:$6$2/rAf7Mg$AFlLsZuXvEt7/7b90UnRwE1pfs97qnA0cNve6oeeI3Gre9Kq9FicXBduWqAOyEwtxV/C./p3SfnFiPYHOg6g5/:16689:0:99999:7:::
+	 gebruiker1:$6$gHyfyHuW$VZXOBD6N.jtq/3a2wArmhy8qyRPx8iZh85MgKihE/u2vyQVKf8NGeAW4b9bVxk8Hg9W10JwLaEQFrOYR8Wb5D.:16815:0:99999:7:::	(<- lijn dus toegevoegd!)
+
+3.	root@debian8Labo:/etc# su - gebruiker1
+	 gebruiker1@debian8Labo:~$ cd /home/gebruiker1    (overbodig commando)
+	 gebruiker1@debian8Labo:~$ touch testBestand
+	 gebruiker1@debian8Labo:~$ pwd
+	 /home/gebruiker1
+	gebruiker1@debian8Labo:~$ whoami
+	 gebruiker1
+	gebruiker1@debian8Labo:~$ exit
+	uitgelogd
+	root@debian8Labo:/etc# 
+
+4.	student@debian8Labo:~$ su - root
+	Wachtwoord:    (<- hier Azerty123)
+	root@debian8Labo:~# echo "gebruiker2:x:1003:1003:Test Gebruiker 2,1,0489512,04578412,hobby's:/home/gebruiker2:/bin/hash" >> /etc/passwd
+	root@debian8Labo:~# cat /etc/passwd    (controlle)
+	 root:x:0:0:root:/root:/bin/bash
+	 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+	 ...    (<- rest van het hele passwd bestand)
+	 test:x:1001:1001:,,,:/home/test:/bin/bash
+	 gebruiker1:x:1002:1002:Test Gebruiker 1,1,04123567,04987654,verschillende hobby's:/home/gebruiker1:/bin/bash
+	 gebruiker2:x:1003:1003:Test Gebruiker 2,1,0489512,04578412,hobby's:/home/gebruiker2:/bin/hash
+   -	manuel met de verkenner kopieren van de root lijn in de /etc/shadow file.
+   -	root@debian8Labo:~# passwd gebruiker2
+	Nieuw UNIX-wachtwoord invoeren:
+	Nieuw UNIX-wachtwoord herhalen:
+	 passwd: wachtwoord is met succes aangepast
+
+5.	root@debian8Labo:~# su - gebruiker2
+	 Geen thuismap, er wordt aangemeld met HOME=/
+	 Kan /bin/hash niet uitvoeren: Bestand of map bestaat niet
+	 (vermoedelijk groep vergeten aanmaken + al bezet id gebruikt!)
+
+6.	(Geen info)
+
+7.	root@debian8Labo:~# deluser gebruiker2
+
+
+Groepen
+-------
+
+1.	root@debian8Labo:/etc# addgroup linuxfans
+	 Toevoegen groep `linuxfans' (groepsnummer 1003)...
+	 Klaar.
+	root@debian8Labo:/etc# addgroup windowsfans
+	 Toevoegen groep `windowsfans' (groepsnummer 1004)...
+	 Klaar.
+	root@debian8Labo:/etc# addgroup macfans
+	 Toevoegen groep `macfans' (groepsnummer 1005)...
+	 Klaar.
+
+2.	root@debian8Labo:/etc# delgroup macfans
+	 Verwijderen groep `macfans'...
+	 Klaar.
+
+3.	root@debian8Labo:/etc# cat group
+	 root:x:0:
+	 daemon:x:1:
+	 ...    (<- rest van het hele group bestand)
+	 student:x:1000:
+	 test:x:1001:
+	 gebruiker1:x:1002:
+	 linuxfans:x:1003:
+	 windowsfans:x:1004:
+
+4.	root@debian8Labo:/etc# adduser gates
+	 Toevoegen van gebruiker `gates'...
+	 Toevoegen nieuwe groep `gates' (1005).
+	 Toevoegen nieuwe gebruiker `gates' (1003) met groep `gates'.
+	 Aanmaken gebruikersmap `/home/gates'...
+	 Kopiëren bestanden van `/etc/skel' ...
+	Nieuw UNIX-wachtwoord invoeren:    (<- wachtwoord naar keuze)
+	Nieuw UNIX-wachtwoord herhalen:    (<- herhaal wachtwoord)
+	 passwd: wachtwoord is met succes aangepast
+	 De gebruikersinformatie van gates wordt veranderd
+	 Voer een nieuwe waarde in of druk op Enter voor de standaardwaarde
+		Volledige naam []: 
+		Kamernummer []: 
+		Telefoon werk []: 
+		Telefoon thuis []: 
+		Varia []: 
+	Is deze informatie correct? [Y/n]    (<- gewoon ENTER)
+	root@debian8Labo:/etc# adduser torvalds
+	 Toevoegen van gebruiker `torvalds'...
+	 Toevoegen nieuwe groep `torvalds' (1006).
+	 Toevoegen nieuwe gebruiker `torvalds' (1004) met groep `torvalds'.
+	 Aanmaken gebruikersmap `/home/torvalds'...
+	 Kopiëren bestanden van `/etc/skel' ...
+	Nieuw UNIX-wachtwoord invoeren:    (<- wachtwoord naar keuze)
+	Nieuw UNIX-wachtwoord herhalen:    (<- herhaal wachtwoord)
+	 passwd: wachtwoord is met succes aangepast
+	 De gebruikersinformatie van torvalds wordt veranderd
+	 Voer een nieuwe waarde in of druk op Enter voor de standaardwaarde
+		Volledige naam []: 
+		Kamernummer []: 
+		Telefoon werk []: 
+		Telefoon thuis []: 
+		Varia []: 
+	Is deze informatie correct? [Y/n]    (<- gewoon ENTER)
+
+5.	root@debian8Labo:/etc# adduser --add gates windowsfans
+	Toevoegen gebruiker `gates' aan groep `windowsfans'...
+	 Gebruiker gates wordt toegevoegd aan groep windowsfans
+	 Klaar.
+	root@debian8Labo:~# adduser --add_extra_group gates linuxfans
+	 Toevoegen gebruiker `gates' aan groep `linuxfans'...
+	 Gebruiker gates wordt toegevoegd aan groep linuxfans
+	 Klaar.
+	root@debian8Labo:/etc# cat passwd
+	 root:x:0:0:root:/root:/bin/bash
+	 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+	 ...    (<- rest van het hele passwd bestand)
+	 student:x:1000:1000:student,,,:/home/student:/bin/bash
+	 sshd:x:116:65534::/var/run/sshd:/usr/sbin/nologin
+	 test:x:1001:1001:,,,:/home/test:/bin/bash
+	 gebruiker1:x:1002:1002:Test Gebruiker 1,1,04123567,04987654,verschillende hobby's:/home/gebruiker1:/bin/bash
+	 torvalds:x:1004:1003:,,,:/home/torvalds:/bin/bash
+	 gates:x:1003:1005:,,,:/home/gates:/bin/bash
+	root@debian8Labo:/etc# cat group
+	 root:x:0:
+	 daemon:x:1:
+	 ...    (<- rest van het hele group bestand)
+	 student:x:1000:
+	 test:x:1001:
+	 gebruiker1:x:1002:
+	 linuxfans:x:1003:gates
+	 windowsfans:x:1004:gates
+	 torvalds:x:1006:
+	 gates:x:1005:    (<- gates zijn hoofdgroep)
+
+6.	(klopt niet!)    
+	root@debian8Labo:/etc# usermod --group linuxfans torvalds
+	root@debian8Labo:/etc# usermod --gid linuxfans torvalds
+	 usermod: geen aanpassingen
+	root@debian8Labo:/etc# cat group
+	 root:x:0:
+	 daemon:x:1:
+	 ...    (<- rest van het hele group bestand)
+	 student:x:1000:
+	 test:x:1001:
+	 gebruiker1:x:1002:
+	 linuxfans:x:1003:gates,torvalds
+	 windowsfans:x:1004:gates
+	 torvalds:x:1006:    (<- torvalds mag hier niet meer staan!!!)
+	 gates:x:1005:
+
+7.	root@debian8Labo:/etc# su - torvalds
+	torvalds@debian8Labo:~$ echo "Dit is een test bestand." > test
+	torvalds@debian8Labo:~$ ls -l test
+	 -rw-r--r-- 1 torvalds torvalds 25 jan 15 21:50 test
+	torvalds@debian8Labo:~$ chmod 640 test
+	torvalds@debian8Labo:~$ ls -l test
+	 -rw-r----- 1 torvalds torvalds 25 jan 15 21:50 test
+	torvalds@debian8Labo:~$ cat test
+	 Dit is een test bestand.
+	torvalds@debian8Labo:~$ su - gates
+	Wachtwoord:    (<- hier u gekozen wachtwoord)
+	gates@debian8Labo:~$ cat /home/torvalds/test
+	 Dit is een test bestand.
+	gates@debian8Labo:~$ su - student
+	Wachtwoord:    (<- hier Azerty123)
+	student@debian8Labo:~$ cat /home/torvalds/test
+	 cat: /home/torvalds/test: Toegang geweigerd
+
+8.	student@debian8Labo:~$ exit
+	 uitgelogd
+	gates@debian8Labo:~$ echo "Dit is gates zijn test bestand." > test
+	gates@debian8Labo:~$ ls -l test
+	 -rw-r--r-- 1 gates gates 32 jan 15 21:58 test
+	gates@debian8Labo:~$ chmod 640 test
+	gates@debian8Labo:~$ ls -l test
+	 -rw-r----- 1 gates gates 32 jan 15 21:58 test
+	gates@debian8Labo:~$ exit
+	 uitgelogd
+	torvalds@debian8Labo:~$ cat /home/gates/test
+	cat: /home/gates/test: Toegang geweigerd
+
+9.	torvalds@debian8Labo:~$ su - gates
+	Wachtwoord:    (<- hier u gekozen wachtwoord)
+	gates@debian8Labo:~$ chgrp linuxfans test
+	gates@debian8Labo:~$ ls -l test
+	 -rw-r----- 1 gates linuxfans 32 jan 15 21:58 test
+	gates@debian8Labo:~$ su - torvalds
+	Wachtwoord:    (<- hier u gekozen wachtwoord)
+	torvalds@debian8Labo:~$ cat /home/gates/test
+	 Dit is gates zijn test bestand.
+	 
+	 
