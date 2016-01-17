@@ -5,13 +5,13 @@ Labo 4 - Toegangsrechten + vi (Door Simon Seghers)
 Contoleren en instellen van rechten
 -----------------------------------
 
-1.	student@debian8Labo:~$ cd -r /etc ~ /
-	 bash: cd: -r: ongeldige optie
-	 cd: Gebruik:  cd [-L|(-P [-e])] [-@] [MAP]
+1.	student@debian8Labo:~$ cp -r /etc ~ /
+	 cp: kan '/etc/default/cacerts' niet openen om te lezen: Toegang geweigerd
+	 ... (<- rest van de errors)
+	 cp: zal geen harde koppeling '/home/student/ect' maken naar map '/home/student/ect'
 	student@debian8Labo:~$ cd etc
-	 bash: cd: etc: Bestand of map bestaat niet
-	student@debian8Labo:~$ pwd
-	 /home/student (opm: zou normaal /home/student/etc/ moeten geven!)
+	student@debian8Labo:~/etc$ pwd
+	 /home/student/etc
 	student@debian8Labo:~$ ls -al
 	 totaal 108
 	 drwxr-xr-x 18 student student 4096 jan 13 10:22 .
