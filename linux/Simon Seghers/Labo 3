@@ -136,7 +136,7 @@ Reguliere expressies
    -	student@debian8Labo:~$ grep D book.txt
 	 David 093331375
 	 Daniel 037897897
-   -	student@debian8Labo:~$ grep 75 book.txt
+   -	student@debian8Labo:~$ grep 75$ book.txt
 	 David 093331375
    -	student@debian8Labo:~$ grep 09 book.txt
 	 David 093331375
