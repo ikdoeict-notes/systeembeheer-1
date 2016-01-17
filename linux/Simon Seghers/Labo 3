@@ -35,19 +35,17 @@ Redirection
 	student@debian8Labo:~$ ls -r >> list2 (of ls | sort -r >> list2)
 	(of student@debian8Labo:~$ ls > list2; ls -r >> list2
 
-7.	student@debian8Labo:~$ /etc/passwd > users; /etc/shadow >> users
-	 -su: /etc/passwd: Toegang geweigerd
-	 -su: /etc/shadow: Toegang geweigerd
+7.	student@debian8Labo:~$ cat /etc/passwd > users; cat /etc/shadow >> users
+	 cat: /etc/shadow: Toegang geweigerd
 
-8.	student@debian8Labo:~$ /etc/passwd > users 2> error.log
-	student@debian8Labo:~$ /etc/shadow >> users 2>> error.log
-	(of student@debian8Labo:~$ /etc/passwd > users 2> error.log; /etc/shadow >> users 2>> error.log)
+8.	student@debian8Labo:~$ cat /etc/passwd > users 2> error.log
+	student@debian8Labo:~$ cat /etc/shadow >> users 2>> error.log
+	(of student@debian8Labo:~$ cat /etc/passwd > users 2> error.log; cat /etc/shadow >> users 2>> error.log)
 
-9.	student@debian8Labo:~$ /etc/passwd > users > /dev/null
-	 -su: /etc/passwd: Toegang geweigerd
-	 student@debian8Labo:~$ /etc/shadow >> users >> /dev/null
-	 -su: /etc/shadow: Toegang geweigerd
-	 (/dev/null is niet te vinden met de verkenner)
+9.	student@debian8Labo:~$ cat /etc/passwd > users > /dev/null
+	student@debian8Labo:~$ cat /etc/shadow >> users >> /dev/null
+	 cat: /etc/shadow: Toegang geweigerd
+	 (/dev/null is niet te vinden met de verkenner hoogstwaarschijnlijk verborgen map)
 	 (student@debian8Labo:~$ ls /dev/null
 	 /dev/null    (<- staat in fluo geel)
 
