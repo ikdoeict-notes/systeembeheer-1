@@ -45,4 +45,32 @@ Oefening 3 - Zoeken
 
 Oefening 4 - Reguliere expressie
 
-1.
+1.cat /etc/hosts | grep localhost
+2.cat > book.txt
+input:
+David 09 3331375 
+Rachel 02 5454643 
+Emily 09 4543535 
+Daniel 03 7897897 
+Monic 014 678667 
+CTRL-D
+
+a)cat book.txt | grep a
+
+b)cat book.txt | grep ^D
+
+c) cat book.txt | grep 75$
+
+d)cat book.txt | grep " 09 "
+
+e)cat book.txt | grep " 0[1-8] "
+
+3.cp /etc/bash.bashrc /home/student
+
+a)cat bash.bashrc | grep ^[e-m]
+
+b)
+
+c)
+
+d)find /etc -name "passwd" > passstudent.txt

@@ -14,10 +14,15 @@ Oefeningen - Shell scripts
 	#
 	#Oef1.2
 	#
-	set foo bar test
-	for i
+	
+	echo "Hoeveel scripts wil u maken?"
+	read x
+	for ((i=1 ; i<=$x ; i++))
 	do
-		echo "$i "
+		echo "Geef de naam van script $i"
+		read naam
+		touch $naam.sh
+		chmod u+x $naam.sh
 	done
 
 3.  #!/bin/bash
