@@ -1,0 +1,18 @@
+#!/bin/bash
+
+bestand1=$1
+bestand2=$2
+$check=true
+until [ -f $bestand1 ]
+do
+	echo "Bestand1 niet gevonden, gelieve een geldige bestandsnaam op te geven."
+	read bestand1
+done
+
+until [ -f $bestand2 ]
+do
+	echo "Bestand 2 niet gevonden, gelieve een geldige bestandsnaam op te geven."
+	read bestand2
+done
+
+diff -y $bestand1 $bestand2

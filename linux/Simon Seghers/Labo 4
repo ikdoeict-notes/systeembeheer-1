@@ -1,0 +1,311 @@
+Labo Linux Basis (2015 - 2016)
+Labo 4 - Toegangsrechten + vi (Door Simon Seghers)
+
+
+Contoleren en instellen van rechten
+-----------------------------------
+
+1.	student@debian8Labo:~$ cp -r /etc ~ /
+	 cp: kan '/etc/default/cacerts' niet openen om te lezen: Toegang geweigerd
+	 ... (<- rest van de errors)
+	 cp: zal geen harde koppeling '/home/student/ect' maken naar map '/home/student/ect'
+	student@debian8Labo:~$ cd etc
+	student@debian8Labo:~/etc$ pwd
+	 /home/student/etc
+	student@debian8Labo:~$ ls -al
+	 totaal 108
+	 drwxr-xr-x 18 student student 4096 jan 13 10:22 .
+	 drwxr-xr-x  4 root    root    4096 sep 11 11:14 ..
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Afbeeldingen
+	 -rw-------  1 student student   51 jan 13 10:19 .bash_history
+	 -rw-r--r--  1 student student  220 sep  8 10:20 .bash_logout
+	 -rw-r--r--  1 student student 3515 sep  8 10:20 .bashrc
+	 drwxr-xr-x  3 student student 4096 jan 13 10:15 Bureaublad
+	 drwxr-xr-x  5 student student 4096 jan 13 10:22 .cache
+	 drwx------  6 student student 4096 jan 13 10:18 .config
+	 drwx------  3 student student 4096 sep  8 10:22 .dbus
+	 -rw-r--r--  1 student student   55 sep  8 10:22 .dmrc
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Documenten
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Downloads
+	 drwx------  3 student student 4096 jan 13 10:22 .gconf
+	 drwx------  3 student student 4096 sep  8 10:22 .gnupg
+	 drwxr-xr-x  2 student student 4096 sep  8 10:23 .gstreamer-0.10
+	 -rw-------  1 student student  656 jan 13 10:22 .ICEauthority
+	 drwxr-xr-x  3 student student 4096 sep  8 10:22 .local
+	 drwx------  4 student student 4096 sep  8 10:23 .mozilla
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Muziek
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Openbaar
+	 -rw-r--r--  1 student student  675 sep  8 10:20 .profile
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Sjablonen
+	 drwxr-xr-x  2 student student 4096 sep  8 10:22 Video's
+	 -rw-------  1 student student  108 jan 13 10:22 .Xauthority
+	 -rw-------  1 student student  660 jan 13 10:25 .xsession-errors
+	 -rw-------  1 student student 1223 jan 13 10:19 .xsession-errors.old
+   -	(Info over onderstaande antwoorden)
+   -	Ja, aan de eerste "d" die voor directory staat, en "-" voor een gewoon bestand.
+   -	Ja, de "x" bepaalt of een gebruiker, groep of andere het bestand/directory kunnen uitvoeren.
+   -	Ja, de "w" bepaalt dit. De eigenaar heeft in dit geval alleen het schrijfrecht (en ook de root gebruiker) 
+   -	De "r" bepaalt dit en de eigenaar heeft alle leesrechten (en de root gebruiker) en bij sommige bestanden ook de groepen en users
+   -	De eigenaar is "student".
+   -	De groep is "student".
+   -	Lees (r) en uitvoer rechten (x) maar niet op elk bestand of op elke directory zoals de beheerder.
+   -	Lees (r) en uitvoer rechten (x) maar niet op elk bestand of op elke directory zoals de beheerder.
+	Maar loopt redelijk gelijk met de groep "student".
+
+2.	(Inoggen als root gebruiker)
+	student@debian8Labo:/$ su -
+	Wachtwoord:    (<- hier dan Azerty123)
+	root@debian8Labo:~# cd /etc
+	root@debian8Labo:/etc# ls -l services
+	 -rw-r--r-- 1 root root 19605 okt 21  2014 services
+	root@debian8Labo:/etc# chmod o-r services
+	root@debian8Labo:/etc# ls -l services
+	 -rw-r----- 1 root root 19605 okt 21  2014 services
+	root@debian8Labo:/etc# chmod a+wx services
+	root@debian8Labo:/etc# ls -l services
+	 -rwxrwx-wx 1 root root 19605 okt 21  2014 services
+	root@debian8Labo:/etc# chmod u=rw,go=w services
+	root@debian8Labo:/etc# ls -l services
+	 -rw--w--w- 1 root root 19605 okt 21  2014 services
+	root@debian8Labo:/etc# chmod 750 services
+	root@debian8Labo:/etc# ls -l services
+	 -rwxr-x--- 1 root root 19605 okt 21  2014 services
+	root@debian8Labo:/etc# exit (<- terug naar student gaan)
+	 uitgelogd
+	student@debian8Labo:/$
+	student@debian8Labo:/$ cd /home/student
+	student@debian8Labo:~$    (<- terug in eigen directory. Let op "/" en "~") 
+
+
+Rechten en bestanden
+--------------------
+
+1.	student@debian8Labo:~$ mkdir metalen
+	student@debian8Labo:~$ cd metalen
+	student@debian8Labo:~/metalen$ touch goud
+	student@debian8Labo:~/metalen$ touch platina
+	  (Opmerking: /dev/null dit is de "vuilbak" van het systeem
+	   alle data die men ernaar toe schrijft is voor altijd verloren.
+	   Indien het gebruikt wordt als invoerbestand wordt er een
+	   bestand gecreëerd van lengte 0
+	   De bestanden kunnen ook gecreëerd op deze manier:
+	   student@debian8Labo:~/metalen$ cp /dev/null goud
+	   student@debian8Labo:~/metalen$ cp /dev/null platina
+	  )
+
+2.	student@debian8Labo:~/metalen$ ls -l goud
+	 -rw-r--r-- 1 student student 0 jan  3 19:29 goud
+	student@debian8Labo:~/metalen$ chmod u+x,o-r,o+w goud
+
+3.	student@debian8Labo:~/metalen$ ls -l
+	 -rwxr---w- 1 student student 0 jan  3 19:29 goud
+	De kleur word veranderd aangezien de gebruiker die op dat moment
+	ingelocht is ook uitvoerrechten heeft op die mappen (denk ik!)
+
+4.	student@debian8Labo:~/metalen$ /home/student/metalen/goud
+
+5.	student@debian8Labo:~/metalen$ ls /home/student < goud
+	  (we slaan alle namen van mappen en bestanden op in het bestand goud
+	   we kunnen dit verfieren met:
+	   student@debian8Labo:~/metalen$ vim goud
+	   :q!	(<- verlaat vim zonder iets te saven, met saven is het "q:")
+	  )
+
+6.	student@debian8Labo:~/metalen$ cat goud
+	 Afbeeldingen
+	 Bureablad
+	 Documenten
+	 Downloads
+	 metalen
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+
+7.	student@debian8Labo:/$ su test
+	Wachtwoord:    (<- hier dan student)
+   -	test@debian8Labo:/home/student/metalen$ cat goud
+	 cat: goud: Toegang geweigerd
+   -	test@debian8Labo:/home/student/metalen$ /home/student/metalen/goud
+	 bash: /home/student/metalen/goud: Toegang geweigerd
+   -	test@debian8Labo:/home/student/metalen$ ls -al goud
+	 bash: goud: Toegang geweigerd
+   -	test@debian8Labo:/home/student/metalen$ exit
+	 exit
+	student@debian8Labo:~/metalen$ cat goud
+	 Afbeeldingen
+	 Bureaublad
+	 Documenten
+	 Downloads
+	 metalen
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+	(Conclusie: geen wijzigingen zijn gebeurt)
+
+
+Rechten op mappen
+-----------------
+
+1.	student@debian8Labo:~/metalen$ cd ..
+	student@debian8Labo:~$ ls -ld metalen
+	 drwxr-xr-x 2 student student 4096 jan 13 13:27 metalen
+   -	student@debian8Labo:~$ cd metalen
+	student@debian8Labo:~/metalen$ ls -al
+	 totaal 12
+	 drwxr-xr-x  2 student student 4096 jan 13 13:27 .
+	 drwxr-xr-x 19 student student 4096 jan 13 13:27 ..
+	 -rwxr---w-  1 student student   87 jan 13 13:27 goud
+	 -rw-r--r--  1 student student    0 jan 13 13:14 platina
+   -	student@debian8Labo:~/metalen$ cd ..
+	 student@debian8Labo:~$ ls metalen
+	 goud  platina
+   -	student@debian8Labo:~$ cat metalen/goud
+	 Afbeeldingen
+	 Bureaublad
+	 Documenten
+	 Downloads
+	 metalen
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+   -	student@debian8Labo:~$ ls >> metalen/goud
+	(Opmerking: terug alle info van de directory toevoegen aan goud bestand
+	alles zal er nu dus 2x in staan.)
+	student@debian8Labo:~$ cat metalen/goud (controle)
+	 Afbeeldingen
+	 Bureaublad
+	 Documenten
+	 Downloads
+	 metalen
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+	 Afbeeldingen
+	 Bureaublad
+	 Documenten
+	 Downloads
+	 metalen
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+   -	student@debian8Labo:~$ touch metalen/zilver
+	student@debian8Labo:~$ /home/student/metalen/zilver
+	 bash: /home/student/metalen/zilver: Toegang geweigerd
+	student@debian8Labo:~$ rm metalen/zilver
+
+2.	student@debian8Labo:~$ chmod u-w,u+x metalen
+	student@debian8Labo:~$ ls -ld metalen
+	 dr-xr-xr-x 2 student student 4096 jan 13 14:12 metalen
+   -	student@debian8Labo:~$ cd metalen
+	student@debian8Labo:~/metalen$ ls -al
+	 totaal 12
+	 drwxr-xr-x  2 student student 4096 jan 13 13:27 .
+	 drwxr-xr-x 19 student student 4096 jan 13 13:27 ..
+	 -rwxr---w-  1 student student   87 jan 13 13:27 goud
+	 -rw-r--r--  1 student student    0 jan 13 13:14 platina
+   -	student@debian8Labo:~/metalen$ cd ..
+	student@debian8Labo:~$ cat metalen/goud
+	 Afbeeldingen
+	 Bureaublad
+	 ... (alles dus 2x)
+	 Sjablonen
+	 Video's
+   -	student@debian8Labo:~$ ls >> metalen/goud
+	 (Opmerking: terug alle info van de directory toevoegen aan goud bestand
+ 	 alles zal er nu dus 3x in staan.)
+	student@debian8Labo:~$ cat metalen/goud (controle)
+	 Afbeeldingen
+	 Bureaublad
+	 ... (alles dus 3x)
+	 Sjablonen
+	 Video's
+   -	student@debian8Labo:~$ touch metalen/zilver
+	touch: kan tijdsstempels van ‘metalen/zilver’ niet wijzigen: Toegang geweigerd
+   -	(Kan niet uitgevoert worden,want het bestand kan niet aangemaakt worden)
+   -	(Kan niet gewist worden,want het bestand kan niet aangemaakt worden)
+
+3.	student@debian8Labo:~$ chmod u+r,u+w,u-x metalen
+	student@debian8Labo:~$ ls -ld metalen
+	 drw-r-xr-x 2 student student 4096 jan 13 14:12 metalen
+   -	student@debian8Labo:~$ cd metalen
+	 bash: cd: metalen: Toegang geweigerd
+	 student@debian8Labo:~$ ls metalen
+	 ls: kan geen toegang krijgen tot metalen/platina: Toegang geweigerd
+	 ls: kan geen toegang krijgen tot metalen/goud: Toegang geweigerd
+	 goud  platina
+   -	student@debian8Labo:~$ cat metalen/goud
+	 cat: metalen/goud: Toegang geweigerd
+   -	student@debian8Labo:~$ ls >> metalen/goud
+	 bash: metalen/goud: Toegang geweigerd
+   -	student@debian8Labo:~$ touch metalen/zilver
+	 touch: kan tijdsstempels van ‘metalen/zilver’ niet wijzigen: Toegang geweigerd
+   -    (Kan niet uitgevoert worden,want het bestand kan niet aangemaakt worden)
+   -    (Kan niet gewist worden,want het bestand kan niet aangemaakt worden)
+
+4.	student@debian8Labo:~$ chmod u+r,u+w,u+x metalen
+	student@debian8Labo:~$ ls -ld metalen
+	drwxr-xr-x 2 student student 4096 jan 13 14:12 metalen
+	student@debian8Labo:~$ touch metalen/zilver
+
+
+Aanpassen eigenaar
+------------------
+
+1.	(Info)
+
+2.	student@debian8Labo:~/metalen$ chown root platina
+	 chown: veranderen van de eigenaar van ‘platina’: Bewerking niet toegestaan
+	student@debian8Labo:~/metalen$ chown test goud
+	chown: veranderen van de eigenaar van ‘goud’: Bewerking niet toegestaan
+
+3. -	(geen info. kan niet aan beperking schijfruimte liggen)
+   -    student@debian8Labo:~/metalen$ chmod +s goud
+	student@debian8Labo:~/metalen$ ls -l goud
+	 -rwsr-S-w- 1 student student 261 jan 13 14:25 goud ("goud" in het rood
+	student@debian8Labo:~/metalen$ chmod -s goud
+	student@debian8Labo:~/metalen$ ls -l goud
+	 -rwxr---w- 1 student student 261 jan 13 14:25 goud ("goud" terug in het groen)
+	(geen verder info.)
+
+4.	student@debian8Labo:~/metalen$ su -
+	Wachtwoord:        <- (hier dan Azerty123)
+	root@debian8Labo:~# cd /home/student/metalen
+	root@debian8Labo:/home/student/metalen# chown root platina
+	root@debian8Labo:/home/student/metalen# chown test goud
+	root@debian8Labo:/home/student/metalen# exit
+	 uitgelogd
+	student@debian8Labo:~/metalen$
+
+
+Vi
+--
+
+1.	vi test1.txt
+
+2.    	Dit document maakt deel uit van de oefeningen op linnux.
+	Dit gedeelte van de oefening behandeld het onderdee vi.
+
+3.	(ESC drukken om naar commad mode te gaan)
+	:w (opslaan comando)
+4.	(de cursor staat nog op de laatste i van "vi")
+	we gaan naar links door "h" te drukken tot we bij de o van "odndredlee" zjn.
+	we typen dan "C" en typen "onderdeel vi"
+5.	ESC drukken om naar commad mode te gaan
+	we gaan lijn naar boven met "k"
+	we gaan naar links door "h" te drukken tot we bij de l van "linnux" zijn.
+	we typen dan "C" en typen "Linux"
+6.	ESC drukken om naar commad mode te gaan
+	:w test2.txt
+	:q (afsluiten met opslaan)
+7.	student@debian8Labo:~$ vi text1.txt
+	:q! (afsluiten zonder opslaan)
+	student@debian8Labo:~$ vi text2.txt
+	:q!
+
+	(zie cursus p. 40 voor opdracht commandos!)
+

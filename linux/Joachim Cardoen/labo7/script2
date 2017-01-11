@@ -1,0 +1,21 @@
+#!/bin/bash
+
+datum=`date "+%m%d"`
+
+if [ $datum -ge 0921 -a $datum -le 1220 ]
+then	
+	cat /home/student/Documents/Scripts/labo7/seasons/autumn
+
+elif [ $datum -ge 0621 -a $datum -le 0920 ]
+then
+	cat /home/student/Documents/Scripts/labo7/seasons/summer
+
+elif [ $datum -ge 0321 -a $datum -le 0620 ]
+then
+	cat /home/student/Documents/Scripts/labo7/seasons/spring
+
+else	cat /home/student/Documents/Scripts/labo7/seasons/winter
+
+fi
+
+echo "Datum is $datum"

@@ -1,0 +1,174 @@
+Labo Linux Basis (2015 - 2016)
+Labo 3 - Redirection, find, reguliere expresies (Door Simon Seghers)
+
+
+Redirection
+-----------
+
+1.	student@debian8Labo:~$ ls
+	 Afbeeldingen  Downloads  Sjablonen      Video's
+	 Bureaublad    Muziek      Documenten    Openbaar
+	student@debian8Labo:~$ touch extraBestand (voor extra bestand)
+
+2.	student@debian8Labo:~$ ls > list
+	student@debian8Labo:~$ cat list
+	 Afbeeldingen
+	 Bureaublad
+	 Documenten
+	 Downloads
+	 extraBestand
+	 Muziek
+	 Openbaar
+	 Sjablonen
+	 Video's
+
+3.	student@debian8Labo:~$ cp list old_list
+
+4.	student@debian8Labo:~$ man sort (vinden we -r voor reverse)
+	student@debian8Labo:~$ ls | sort -r > list
+
+5.	student@debian8Labo:~$ man cat (vinden we -n voor line numbers)
+	student@debian8Labo:~$ cat -n list >> double_list
+	student@debian8Labo:~$ cat -n old_list >> double_list
+
+6.	student@debian8Labo:~$ ls > list2
+	student@debian8Labo:~$ ls -r >> list2 (of ls | sort -r >> list2)
+	(of student@debian8Labo:~$ ls > list2; ls -r >> list2
+
+7.	student@debian8Labo:~$ cat /etc/passwd > users; cat /etc/shadow >> users
+	 cat: /etc/shadow: Toegang geweigerd
+
+8.	student@debian8Labo:~$ cat /etc/passwd > users 2> error.log
+	student@debian8Labo:~$ cat /etc/shadow >> users 2>> error.log
+	(of student@debian8Labo:~$ cat /etc/passwd > users 2> error.log; cat /etc/shadow >> users 2>> error.log)
+
+9.	student@debian8Labo:~$ cat /etc/passwd > users > /dev/null
+	student@debian8Labo:~$ cat /etc/shadow >> users >> /dev/null
+	 cat: /etc/shadow: Toegang geweigerd
+	 (/dev/null is niet te vinden met de verkenner hoogstwaarschijnlijk verborgen map)
+	 (student@debian8Labo:~$ ls /dev/null
+	 /dev/null    (<- staat in fluo geel)
+
+10.	student@debian8Labo:~$ cat list unknown 2>> error.log
+
+
+Zoeken
+------
+
+1.	student@debian8Labo:~$ man find (vinden we -name voor zoeken op naam)
+	student@debian8Labo:~$ find / -name host 2>> error.log
+	 /usr/bin/host
+	 /usr/share/doc/host
+	 /usr/share/bash-completion/completions/host
+	 /lib/modules/3.16.0-4-amd64/kernel/drivers/misc/mic/host
+	 /lib/modules/3.16.0-4-amd64/kernel/drivers/usb/host
+	 /lib/modules/3.16.0-4-amd64/kernel/drivers/mmc/host
+	 /lib/modules/3.16.0-4-amd64/kernel/drivers/memstick/host
+	 (opmerking: veel errors in de error.log met melding toegang geweigerd)
+
+2.	student@debian8Labo:~$ mkdir map1
+	student@debian8Labo:~$ cd map1
+	student@debian8Labo:~/map1$ touch file1.rot
+	student@debian8Labo:~/map1$ touch file2.rot
+	student@debian8Labo:~/map1$ touch file3.rot
+	student@debian8Labo:~/map1$ cd ..
+	student@debian8Labo:~$ mkdir map2
+	student@debian8Labo:~$ cd map2
+	student@debian8Labo:~/map2$ touch file1.rot
+	student@debian8Labo:~/map2$ touch file2.rot
+	student@debian8Labo:~/map2$ touch file3.rot
+	student@debian8Labo:~/map2$ cd ..
+	student@debian8Labo:~$ mkdir map3
+	student@debian8Labo:~$ cd map3
+	student@debian8Labo:~/map3$ touch file1.rot
+	student@debian8Labo:~/map3$ touch file2.rot
+	student@debian8Labo:~/map3$ touch file3.rot
+	student@debian8Labo:~/map3$ cd ..
+	student@debian8Labo:~$ find / -name *.rot 2>> error.log (controleren)
+	 /home/student/map2/file2.rot
+	 /home/student/map2/file1.rot
+	 /home/student/map2/file3.rot
+	 /home/student/map1/file2.rot
+	 /home/student/map1/file1.rot
+	 /home/student/map1/file3.rot
+	 /home/student/map3/file2.rot
+	 /home/student/map3/file1.rot
+	 /home/student/map3/file3.rot
+	student@debian8Labo:~$ find / -name *.rot -delete 2>> error.log
+	student@debian8Labo:~$ find / -name *.rot 2>> error.log
+	(opmerking: veel errors in de error.log met melding toegang geweigerd)
+
+3.	student@debian8Labo:~$ mkdir zoek
+	student@debian8Labo:~$ cd zoek
+	student@debian8Labo:~/zoek$ touch eazr
+	student@debian8Labo:~/zoek$ touch rzae
+	student@debian8Labo:~/zoek$ touch rae
+	student@debian8Labo:~/zoek$ touch ezr
+	student@debian8Labo:~/zoek$ touch bcd
+	student@debian8Labo:~/zoek$ find /home/student/zoek -depth -name '*a*'
+	 /home/student/zoek/rzae
+	 /home/student/zoek/rae
+	 /home/student/zoek/eazr
+	student@debian8Labo:~/zoek$ find /home/student/zoek -depth -name '*z*'
+	 /home/student/zoek/rzae
+	 /home/student/zoek/eazr
+	 /home/student/zoek/ezr
+
+
+Reguliere expressies
+--------------------
+
+1.	student@debian8Labo:~$ grep  /etc/hosts -e localhost
+	 127.0.0.1    localhost
+	 ::1     localhost ip6-localhost ip6-loopback
+
+2.	student@debian8Labo:~$ cat > book.txt
+	David 093331375
+	Rachel 025454643
+	Emily 094543535
+	Daniel 037897897
+	Monic 014678667
+	(CTRL+D om te sluiten)
+   -	student@debian8Labo:~$ grep a  book.txt
+	 David 093331375
+	 Rachel 025454643
+	 Daniel 037897897
+   -	student@debian8Labo:~$ grep D book.txt
+	 David 093331375
+	 Daniel 037897897
+   -	student@debian8Labo:~$ grep 75$ book.txt
+	 David 093331375
+   -	student@debian8Labo:~$ grep 09 book.txt
+	 David 093331375
+	 Emily 094543535
+   -    student@debian8Labo:~$ grep -v 09 book.txt
+	 Rachel 025454643
+	 Daniel 037897897
+	 Monic 014678667
+
+3.	student@debian8Labo:~$ cp /etc/bash.bashrc /home/student
+   -	student@debian8Labo:~$ grep "^[efghijklm]" bash.bashrc
+	 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+	 fi
+	 if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-not-found ]; then
+	 fi
+   -    student@debian8Labo:~$ egrep -r "if|then" bash.bashrc
+	 # check the window size after each command and, if necessary,
+	 # set variable identifying the chroot you work in (used in the prompt below)
+	 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+	 #if ! shopt -oq posix; then
+	 #  if [ -f /usr/share/bash-completion/bash_completion ]; then
+	 #  elif [ -f /etc/bash_completion ]; then
+	 # if the command-not-found package is installed, use it
+	 if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-not-found ]; then
+	 	if [ -x /usr/lib/command-not-found ]; then
+	 	elif [ -x /usr/share/command-not-found/command-not-found ]; then
+   -	student@debian8Labo:~$ grep -i term bash.bashrc
+	 # Commented out, don't overwrite xterm -T "title" -n "icontitle" by default.
+	 # If this is an xterm set the title to user@host:dir
+	 #case "$TERM" in
+	 #xterm*|rxvt*)
+
+4.	(klopt niet! Het vinden van alle bestanden wel, maar de grep klopt niet.)
+	root@debian8Labo:~# find /etc -name passwd | grep -e student > /home/student/passtudent.txt
+

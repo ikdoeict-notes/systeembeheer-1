@@ -1,0 +1,13 @@
+#!/bin/bash
+
+scripts=$@
+
+for script in $scripts
+do 
+	touch $script
+	echo "#!/bin/bash" > $script
+	echo "#`date`" >> $script
+	echo "#`whoami`" >> $script
+	echo "$# scripts made."
+done
+

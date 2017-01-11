@@ -1,0 +1,16 @@
+#!/bin/bash
+#Tue Jan 10 23:04:32 CET 2017
+#student
+int=$1
+control=1
+while [ $control -eq 1 ]
+do
+	if [ $int -ge 0 -a $int -le 9 ]	
+	then	echo "Integer was $int, give new integer"
+		read int		
+	else
+		control=2
+	fi
+done
+
+echo "Script terminated. Integer not in range [0-9]"	 

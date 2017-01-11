@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scripts=$@
+
+for script in $scripts
+do 
+	touch $script
+done
+
