@@ -1,0 +1,38 @@
+ls > list : stdout list
+
+ls | sort -r > list : stdout reverse order sorted
+
+cat list old_list -n > double_list : number the lines and concat list & old_list into new file douyble_list
+> : replace with
+>> : append
+
+cat list unknown 2>>error.log : adds errors to the log-file (append)
+
+/dev/null => 'dark space'
+
+find -delete : removes the found files
+
+cat /etc/hosts | grep 'localhost' : displays the hosts file and use that to pipe through to grep that searches for the pattern of localhost
+
+echo "David blablabla" >> book.txt : adds content string to book.txt
+cat >> book.txt : same as above (CTRL + D to exit)
+
+grep 'a' book.txt : find lines with a in them
+grep [D*] book.txt : lines that start with D followed by any characters
+grep '^[D]' book.txt : lines that start with D followed by any characters
+grep '75$' book.txt : lines ending with 75
+grep '09' book.txt : find lines with the pattern 09 in
+grep '^09' book.txt : find lines with the pattern 09 in
+grep '^09' book.txt -v : find lines with the pattern 09 in and invert so only lines without the pattern are shown
+grep '^[e-m]' bash.bashrc : find lines starting with e...m 
+grep '[if]' bash.bashrc | grep '[then]' : finds lines with both if & then
+grep -i 'term' bash.bashrc : find term in bash.bashrc whilst ignoring case sensitivity
+
+sudo find /etc -name '*passwd*' | xargs grep 'student' > passtudent.txt : searches files that containt 'passwd', then take this is argument
+in the grep function and finds lines containing student and then redirects that into the file passtudent.txt
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+date: Fri Sep 30 16:54:20 CEST 2016
+pwd: current directory
+ls: list van de directories
+clear: clear screen
+
+ls -a : include files starting with .
+ls -al : include files starting with . & uses long listing format
+ls -R : list subdirectories recursively
+
+cat .bashrc : displayed contents of files (also used for redirections & copying)
+
+mkdir werk : make directory named 'werk'
+
+cd DIRNAME : change directory
+cd .. : go to upper-level dir
+
+rm -r werk : remove werk, -r specificies to delete them recursively (files + directories)
+
+cp .bashrc test.txt : copies contents of bashrc to test1.txt
+mv test.txt test1.txt : move content of test.txt to test1.txt
+
+wc test1.txt : print newline, word and byte counts for each file
+wc -l test1.txt : print the newline counts
+
+cal month year (eg cal 6 1996) : prints out calendar with specific dates (day not configureable)
+
+Toon de inhoud van de directory /etc
+doe dit vanuit de home directory van student (/home/student)
+ls /etc
+
+gebruik * om alle bestanden te tonen met een extensie conf
+ls /etc/*.conf
+
+gebruik ? om alle bestanden met een bestandsnaam van 6 karakters te tonen
+ls /etc/??????.*
+
+Gebruik mkdir om in de homedirectory van student een map etc aan te maken. Probeer telkens vanuit de homedirectory van student volgende commando’s:
+cd etc : in dir van home/student
+cd /etc : directory in de root
+
+cat .bashrc : displays in full
+more .bashrc : fills screen (press ENTER)
+less .bashrc : prints line-per-line
+
+head -5 .bashrc : print the first 5 lines of the file (	also blank lines)
+tail -f : will print appended data as the file grows
+
+mkdir check : make directory 'check'
+touch niew : create new file called 'niew'
+cp .... ... : copy source destination
+
+cat fstab motd niew : concatinate contents of the 3 files
+rm -r check : delete directory
+
+
+CTRL + H : clear single character on CL
+CTRL + U : clear full line
+
+
+ 

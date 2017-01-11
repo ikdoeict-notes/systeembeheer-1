@@ -1,0 +1,20 @@
+COMMANDS:
+
+6 tekstconsoles => tty1-6 (exit)
+Start program: top
+Overzicht processen met woord top (pipe): ps aux | grep top
+Kill proces: kill <procesnumber>
+Switchen tussen gpu-windows: WINDOWS + PGUP/PGDN (=> Activities)
+Super-user mode in terminal: su
+Search program: apt-cache search <subject>
+Install program: apt-get install <program>
+Parameter bij STDOUT => | more (na commando)
+Power off /sbin/poweroff
+Eject CD ROM: eject /dev/cdrom
+
+STABLE:
+Ubuntu 16.04 LTS
+OpenSUSE 13.2
+Debian 8.6
+Fedora 20
+Linux Mint 17.6

@@ -1,0 +1,30 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+mkdir backup
+cp /etc/passwd backup
+cp /etc/shadow backup
+cp /etc/group backup
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+adduser testuser
+=> Nieuwe map gemaakt in dir home
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+VIM: /etc/passwd -- /etc/group -- /etc/shadow
+passwd directeur ENTER appel
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sudo apt install csh
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+userdel directeur
+
+VIM: /etc/passwd -- /etc/group -- /etc/shadow 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+addgroup linuxfans ...
+delgroup mpacfans
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+640: zelfde groep kan lezen, others niet
+usermod torvalds --gid linuxfans
+gates zit in 2 groepen, torvalds maar in 1 => groepseigenaar is anders
+Door groepseigenaar van het bestand te veranderen lukt dit

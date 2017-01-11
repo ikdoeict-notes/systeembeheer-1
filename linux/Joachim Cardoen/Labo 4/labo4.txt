@@ -1,0 +1,17 @@
+cp -r /etc ~/
+
+--- 000 0 elk type toegang is verboden
+--x 001 1 alleen uitvoerrecht
+-w- 010 2 alleen schrijfrecht
+-wx 011 3 schrijf- en uitvoerrecht
+r-- 100 4 alleen leesrecht
+r-x 101 5 lees- en uitvoerrecht
+rw- 110 6 lees- en schrijfrecht
+rwx 111 7 lees-, schrijf- en uitvoerrecht
+
+chmod u+x,o-r+w goud
+
+VIM:
+
+Deleting lines: D
+Search & Replace: :%s/linnux/linux/g
