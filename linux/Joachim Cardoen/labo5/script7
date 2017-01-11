@@ -1,0 +1,20 @@
+#!/bin/bash
+#Tue Jan 10 23:24:29 CET 2017
+#student
+
+dialog --backtitle "Linux Shell Script" --title "Kies commando" --menu "Move using [UP] [DOWN], [ENTER] to select" 15 50 3 LoadAVG "Check content of loadavg" Uptime "Check content of uptime" Tail "Show tail" 2> menu.txt
+
+i=`cat menu.txt`
+case $i in
+	LoadAVG) clear
+	cat /proc/loadavg
+	;;
+	Uptime) clear
+	cat /proc/uptime
+	;;
+	Tail) clear
+	dmesg | tail
+	;;
+esac
+
+

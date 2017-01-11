@@ -1,0 +1,58 @@
+#!/bin/bash
+
+echo "Dit is een backupscript. Dit script voegt al de homedirectories toe aan een backup map te vinden in /mnt/backup. Dit script heeft ook logging. Te vinden in /var/log/backup_error en backup_log"
+
+
+# Als de log en error file al bestaan, verwijderen ze
+if [ -f /var/log/backup_log ]
+then
+	rm /var/log/backup_log
+fi
+
+if [ -f /var/log/backup_error ]
+then
+	rm /var/log/backup_error
+fi
+
+# We maken de bestanden aan
+touch /var/log/backup_log
+touch /var/log/backup_error
+
+# Redirect elke error tijdens het uitvoeren van dit script
+exec 2> /var/log/backup_error
+
+# Logging
+echo "Script gestart" >> /var/log/backup_log
+
+# We maken een array met alle directories in, /home/*/ met schakel -d geeft enkel dirs
+users=`ls /home/* -d`
+
+# Debugging
+echo "DEBUG $users"
+
+# Als het backup dir nog niet bestaat maken we een nieuwe dir aan
+if [ ! `find /mnt/ -type d -name "backup"` ]
+then
+	echo "/mnt/backup niet gevonden. Directory aangemaakt" >> /var/log/backup_log
+	mkdir /mnt/backup
+fi
+
+# Itereren over elke directory in onze array
+for user in $users
+do
+	# We compresseren dit en voegen het toe aan ons archief
+	tar -c $user | bzip2 > $user.tar
+
+	# We verplaatsen het archief naar het backup dir
+	mv $user.tar /mnt/backup
+
+	# We loggen elke user
+	echo "$user compressed en gearchiveerd in /mnt/backup" >> /var/log/backup_log
+
+done
+
+
+# sed voor log
+timestamp=`date +"%H:%M:%S"`
+sed -i 's/^/'$timestamp'  /' /var/log/backup_error
+sed -i 's/^/'$timestamp'  /' /var/log/backup_log

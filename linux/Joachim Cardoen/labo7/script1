@@ -1,0 +1,10 @@
+#!/bin/bash
+
+month=$1
+year=$2
+for (( i=1 ; i <= 15; i++ ))
+do
+	mkdir $year"-"$month"-"$i
+done
+
+

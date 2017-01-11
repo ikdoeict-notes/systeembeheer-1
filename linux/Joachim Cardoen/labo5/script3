@@ -1,0 +1,22 @@
+#!/bin/bash
+
+scripts=$@
+
+for script in $scripts
+do 
+	if [ -f $script ]
+	then
+		echo "a file with this name is already present. Do you want to delete the file? (Y/N)?"
+		read answer
+		if [ $answer = "N" ]
+		then
+			echo "File not made."
+		else
+			rm $script
+			touch $script
+		fi
+	else
+		touch $script
+	fi
+done
+
